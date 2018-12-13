@@ -1,5 +1,37 @@
+# -*- coding: UTF-8 -*-
 """
 1、有一群鸡和一群兔，它们的只数相同，它们的脚数都是三位数，且这两个三位数的数字分别是0，1，2，3，4，5。问鸡和兔的只数各是多少?它们的脚数各是多少?
+"""
+for chickens in range(50,500):
+    chickjiao = chickens * 2
+    rabbitjiao = chickens * 4
+    if chickjiao > 999 or rabbitjiao > 999:
+        print(chickjiao, rabbitjiao)
+        break
+    jgw=(chickens*2)%10
+    jsw = (chickens * 2)//10%10
+    jbw=(chickens*2)//100
+    rgw = (chickens * 4) % 10
+    rsw = (chickens * 4) // 10 % 10
+    rbw = (chickens * 4) // 100
+    arr=[0,0,0,0,0,0,0,0,0,0]
+    arr[jgw] = 1
+    arr[jsw] = 1
+    arr[jbw] = 1
+    arr[rgw] = 1
+    arr[rsw] = 1
+    arr[rbw] = 1
+    print (chickjiao, rabbitjiao)
+    print(arr)
+    success = True
+    for i in range(0,6):
+        if arr[i] == 0:
+            success = False
+            break
+    if success:
+        print("chicken jiao=", chickens*2, "rabbit jiao=", chickens * 4)
+
+"""
 2、有一个三位数，个位数字比百位数字大，而百位数字又比十位数字大，并且各位数字之和等于各位数字相乘之积，求此三位数。
 3、蜘蛛有8条腿，蜻蜓有6条腿和2对翅，蝉有6条腿和1对翅。三种虫子共18共，共有118条腿和20对翅。问每种虫子各几只？
 4、甲、乙两数的和为168，甲数的八分之一与乙数的四分之三的和为76，求甲、乙两数各是多少？
