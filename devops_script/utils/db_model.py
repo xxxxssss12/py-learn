@@ -38,7 +38,31 @@ class AppConfigDo(BaseModel):
     class Meta:
         table_name = 'tb_app_config'
     def __str__(self) :
-        return "AppConfigDt[id=%s, app_name=%s, app_desc=%s, git_url=%s, work_root_dir=%s, create_time=%s, update_time=%s]"%(self.id, self.app_name,self.app_desc,self.git_url,self.work_root_dir,self.create_time,self.update_time)
+        return "AppConfigDt[id=%s, app_name=%s, app_desc=%s, git_url=%s, work_root_dir=%s, create_time=%s, update_time=%s]"%(
+            self.id, self.app_name,self.app_desc,self.git_url,self.work_root_dir,self.create_time,self.update_time
+        )
+
+class ServiceConfigDo(BaseModel):
+    app_id = IntegerField()
+    service_id = CharField(max_length=255)
+    service_desc = CharField(max_length=255)
+    service_type = IntegerField()
+    build_type = IntegerField()
+    build_child_dir = CharField(max_length=255)
+    build_pack_name = CharField(max_length=255)
+    run_root_dir = CharField(max_length=255)
+    listen_port = IntegerField()
+    work_relat_dir = CharField(max_length=255)
+    create_time = DateTimeField(constraints=[SQL("DEFAULT CURRENT_TIMESTAMP")])
+    update_time = DateTimeField(constraints=[SQL("DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0)")])
+
+    class Meta:
+        table_name = 'tb_service_config'
+    def __str__(self):
+        return "ServiceConfigDo[id=%s, app_id=%s, service_id=%s, service_desc=%s, service_type=%s, build_type=%s, build_child_dir=%s, build_pack_name=%s, run_root_dir=%s, listen_port=%s, work_relat_dir=%s, create_time=%s, update_time=%s]"%(
+            self.id, self.app_id,self.service_id,self.service_desc,self.service_type,self.build_type,self.build_child_dir,
+            self.build_pack_name,self.run_root_dir,self.listen_port,self.work_relat_dir,self.create_time,self.update_time,
+        )
 
 #查询数据库是连接
 log.info("db connect start...now status is %s" % (db.is_closed())) #返回false未连接
