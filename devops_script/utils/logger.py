@@ -28,7 +28,7 @@ class Logger:
             getattr(logging, set_level.upper()) if hasattr(logging, set_level.upper()) else logging.INFO)  # 设置日志级别
         if not os.path.exists(log_path):  # 创建日志目录
             os.makedirs(log_path)
-        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        formatter = logging.Formatter("[%(asctime)s][%(levelname)s][%(name)s] %(message)s")
         handler_list = list()
         handler_list.append(logging.FileHandler(os.path.join(log_path, log_name), encoding="utf-8"))
         if use_console:

@@ -19,4 +19,7 @@ if 0 == len(config_path):
 ConfigHolder.load(config_path)
 
 host = ConfigHolder.get("database", "host")
-print(host)
+
+from utils.dao_model import AppConfigDo
+appConfig = AppConfigDo.get(id=1)
+print(appConfig.__str__())
