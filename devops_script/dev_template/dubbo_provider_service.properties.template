@@ -1,0 +1,2 @@
+spring.application.name={service_id}
+dubbo.protocol.port={port}

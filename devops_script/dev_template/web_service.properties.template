@@ -1,0 +1,3 @@
+server.port={port}
+spring.application.name={service_id}
+server.servlet.context-path={web_context_url}

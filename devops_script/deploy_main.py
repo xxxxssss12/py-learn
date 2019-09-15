@@ -5,6 +5,10 @@ import sys
 import os
 from utils.logger import Logger
 from utils.config_holder import ConfigHolder
+from utils.env_holder import EnvHolder
+import utils.zip_util as ZipUtils
+
+EnvHolder.put("script.root.path", os.path.join(os.path.dirname(os.path.abspath(__file__))))
 
 log = Logger("info")
 config_path = ""
@@ -16,29 +20,41 @@ except :
 
 if 0 == len(config_path):
     config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "devops_config.ini")
+
 ConfigHolder.load(config_path)
 
 from utils.db_model import AppConfigDo, ServiceConfigDo
 
 app_config_list = AppConfigDo.select()
+app_config_map = {}
 print("------请选择要部署的应用序号：")
 for app_config_do in app_config_list:
     print("[%s] %s(%s)"%(app_config_do.id, app_config_do.app_name, app_config_do.app_desc))
+    app_config_map[app_config_do.id] = app_config_do
 choose_app_id = int(input("请选择: "))
-print()
+choose_app_do = app_config_map[choose_app_id]
+
+print(choose_app_do.__str__())
 
 service_config_list = ServiceConfigDo.select().where(ServiceConfigDo.app_id == choose_app_id)
+service_config_map = {}
 print("------请选择要部署的服务序号(逗号分隔)：")
 for service_config_do in service_config_list:
     print("[%s] %s(%s)"%(service_config_do.id, service_config_do.service_id, service_config_do.service_desc))
+    service_config_map[service_config_do.id] = service_config_do
 choose_service_ids = input("请选择(逗号分隔): ")
 print(choose_service_ids)
+choose_service_idArr = choose_service_ids.split(",")
+choose_service_do_list = []
+for choose_service_id in choose_service_idArr:
+    if choose_service_id is not None and len(choose_service_id) > 0:
+        choose_service_do_list.append(service_config_map[int(choose_service_id)])
 print()
 
-choose_git_branch = input("------请选择要部署的GIT分支(默认master): ")
-if choose_git_branch is None or len(choose_git_branch) == 0:
-    choose_git_branch="master"
-print(choose_git_branch)
+deploy_git_branch = input("------请选择要部署的GIT分支(默认master): ")
+if deploy_git_branch is None or len(deploy_git_branch) == 0:
+    deploy_git_branch = "master"
+print(deploy_git_branch)
 print()
 
 is_init_dir = input("------目录不存在是否初始化(0=否，1=是，默认初始化): ")
@@ -52,3 +68,7 @@ if is_init_dir < 0:
 print(is_init_dir)
 print()
 
+from deploy_executor import DeployExecutor
+
+executor = DeployExecutor(choose_app_do, choose_service_do_list, deploy_git_branch, is_init_dir)
+executor.do_deploy()
