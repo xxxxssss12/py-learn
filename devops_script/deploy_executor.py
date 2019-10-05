@@ -124,20 +124,27 @@ class DeployExecutor:
         pack_jar_path = os.path.join(work_path, "jar")
         jar_name = service_config_do.build_pack_name
         if os.path.exists(os.path.join(pack_jar_path, jar_name)):
-            log.info("备份源文件")
             dt = datetime.datetime.now()
+            log.info("备份源文件: mv %s %s" % (
+                os.path.join(pack_jar_path, jar_name),
+                os.path.join(pack_backup_path, jar_name + dt.strftime("%Y%m%d%H%M%S"))
+            ))
             os.system("mv %s %s" % (
                 os.path.join(pack_jar_path, jar_name),
                 os.path.join(pack_backup_path, jar_name + dt.strftime("%Y%m%d%H%M%S"))
             ))
         if not os.path.exists(os.path.join(pack_backup_path, jar_name)):
             raise RuntimeError('jar not exists!')
-        log.info("发布")
+        log.info("发布:mv %s %s" % (
+            os.path.join(pack_backup_path, jar_name),
+            os.path.join(pack_jar_path, jar_name)
+        ))
         os.system("mv %s %s" % (
             os.path.join(pack_backup_path, jar_name),
             os.path.join(pack_jar_path, jar_name)
         ))
-        log.info("重启服务")
         restart_file = os.path.join(work_path, "restart.sh")
-        os.system("sh %s" %restart_file)
+
+        log.info("重启服务: sh %s" % restart_file)
+        os.system("sh %s" % restart_file)
         pass
