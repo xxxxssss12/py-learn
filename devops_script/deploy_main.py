@@ -12,10 +12,12 @@ EnvHolder.put("script.root.path", os.path.join(os.path.dirname(os.path.abspath(_
 log = Logger("info")
 config_path = ""
 
+'''
 try:
     config_path = sys.argv[1]
 except:
     log.info("not input config_path, use default")
+'''
 
 if 0 == len(config_path):
     config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "devops_config.ini")
@@ -69,6 +71,7 @@ for choose_service_id in choose_service_idArr:
     if choose_service_id is not None and len(choose_service_id) > 0:
         choose_service_do_list.append(service_config_map[int(choose_service_id)])
 print()
+
 if not is_use_input_param:
     deploy_git_branch = input("------请决定要部署的GIT分支(默认master): ")
 if deploy_git_branch is None or len(deploy_git_branch) == 0:
