@@ -52,8 +52,8 @@ if not is_use_input_param:
         app_config_map[app_config_do.id] = app_config_do
     choose_app_id = int(input("请选择: "))
 
+print("choose_app_id=%s" % choose_app_id)
 choose_app_do = app_config_map[choose_app_id]
-
 print("choose_app_do=%s" % choose_app_do.__str__())
 
 service_config_list = ServiceConfigDo.select().where(ServiceConfigDo.app_id == choose_app_id)
