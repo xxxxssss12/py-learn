@@ -45,24 +45,26 @@ if choose_app_id_str is not None and len(choose_app_id_str) > 0 \
 
 app_config_list = AppConfigDo.select()
 app_config_map = {}
+for app_config_do in app_config_list:
+    app_config_map[app_config_do.id] = app_config_do
+
 if not is_use_input_param:
     print("------请决定要部署的应用序号：")
     for app_config_do in app_config_list:
         print("[%s] %s(%s)" % (app_config_do.id, app_config_do.app_name, app_config_do.app_desc))
-        app_config_map[app_config_do.id] = app_config_do
     choose_app_id = int(input("请选择: "))
-
 print("choose_app_id=%s" % choose_app_id)
 choose_app_do = app_config_map[choose_app_id]
 print("choose_app_do=%s" % choose_app_do.__str__())
 
 service_config_list = ServiceConfigDo.select().where(ServiceConfigDo.app_id == choose_app_id)
 service_config_map = {}
+for service_config_do in service_config_list:
+    service_config_map[service_config_do.id] = service_config_do
 if not is_use_input_param:
     print("------请决定要部署的服务序号(逗号分隔)：")
     for service_config_do in service_config_list:
         print("[%s] %s(%s)" % (service_config_do.id, service_config_do.service_id, service_config_do.service_desc))
-        service_config_map[service_config_do.id] = service_config_do
     choose_service_ids = input("请选择(逗号分隔): ")
 print("choose_service_ids=%s" % choose_service_ids)
 choose_service_idArr = choose_service_ids.split(",")
