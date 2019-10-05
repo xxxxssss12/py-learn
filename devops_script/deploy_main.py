@@ -52,7 +52,7 @@ if not is_use_input_param:
 
 choose_app_do = app_config_map[choose_app_id]
 
-print(choose_app_do.__str__())
+print("choose_app_do=%s" % choose_app_do.__str__())
 
 service_config_list = ServiceConfigDo.select().where(ServiceConfigDo.app_id == choose_app_id)
 service_config_map = {}
@@ -62,7 +62,7 @@ if not is_use_input_param:
         print("[%s] %s(%s)" % (service_config_do.id, service_config_do.service_id, service_config_do.service_desc))
         service_config_map[service_config_do.id] = service_config_do
     choose_service_ids = input("请选择(逗号分隔): ")
-print(choose_service_ids)
+print("choose_service_ids=%s" % choose_service_ids)
 choose_service_idArr = choose_service_ids.split(",")
 choose_service_do_list = []
 for choose_service_id in choose_service_idArr:
@@ -73,7 +73,7 @@ if not is_use_input_param:
     deploy_git_branch = input("------请决定要部署的GIT分支(默认master): ")
 if deploy_git_branch is None or len(deploy_git_branch) == 0:
     deploy_git_branch = "master"
-print(deploy_git_branch)
+print("deploy_git_branch=%s" % deploy_git_branch)
 print()
 
 if not is_use_input_param:
@@ -85,7 +85,7 @@ if is_init_dir > 1:
     is_init_dir = 1
 if is_init_dir < 0:
     is_init_dir = 0
-print(is_init_dir)
+print("is_init_dir=%s" % is_init_dir)
 print()
 
 from deploy_executor import DeployExecutor
