@@ -28,10 +28,16 @@ from utils.db_model import AppConfigDo, ServiceConfigDo
 
 is_use_input_param = False
 # param init
-choose_app_id_str = sys.argv[1]
-choose_service_ids = sys.argv[2]
-deploy_git_branch = sys.argv[3]
-is_init_dir = sys.argv[4]
+choose_app_id_str = ''
+choose_service_ids = ''
+deploy_git_branch = ''
+is_init_dir = ''
+
+if len(sys.argv) > 4:
+    choose_app_id_str = sys.argv[1]
+    choose_service_ids = sys.argv[2]
+    deploy_git_branch = sys.argv[3]
+    is_init_dir = sys.argv[4]
 
 choose_app_id = -1
 # check is_use_input_param
